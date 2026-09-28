@@ -26,4 +26,5 @@ const presentations=[
  {summary:'護理師，我好冷，一直發抖停不下來。',findings:['全身顫抖','主訴寒冷','體溫 35.6°C'],vitals:{hr:102,bp:'138/82',spo2:97,rr:22}},
  {summary:'護理師，我覺得很暈、很虛弱，手腳也冰冰的。',findings:['末梢灌流不佳','皮膚濕冷','意識反應變慢'],vitals:{hr:116,bp:'76/42',spo2:94,rr:24}},
  {summary:'護理師，我還是很暈，感覺整個人都沒有力氣。',findings:['輸液補充後血壓仍偏低','末梢灌流不佳','需使用輸液幫浦持續監測'],vitals:{hr:110,bp:'74/42',spo2:95,rr:22}},
-]export const CASES = scenarios.map(([id,topic,medicationId,text,stock,expectedDraw,answerUnit,calculation],index)=>({id,topic,medicationId,order:{text,stock,expectedDraw,answerUnit,calculation},presentation:presentations[index],patient:{...base,vitals:{...base.vitals,...presentations[index].vitals},code:`SIM-${String(index+1).padStart(2,'0')}`,age:base.age+index},educationOnly:true}))
+]
+export const CASES = scenarios.map(([id,topic,medicationId,text,stock,expectedDraw,answerUnit,calculation],index)=>({id,topic,medicationId,order:{text,stock,expectedDraw,answerUnit,calculation},presentation:presentations[index],patient:{...base,vitals:{...base.vitals,...presentations[index].vitals},code:`SIM-${String(index+1).padStart(2,'0')}`,age:base.age+index},educationOnly:true}))
