@@ -11,7 +11,7 @@ export function sceneTemplate(game){
  const actionZones=[['patient','patient-bay','病人資料'],['cabinet','medication-cart','藥物櫃'],['dose','preparation','劑量計算'],['prepare','preparation-cart','準備藥物'],['check','nurse-station','給藥確認'],['administer','patient-bay','給藥'],['monitor','patient-bay','給藥後監測'],['complete','documentation','完成關卡']]
  const legacyZones=zones.map(([id,label,sub])=>`<span class="v8-sr-only">${label} ${sub}</span>`).join('')
  return `<main class="game-shell v8-shell ${verified?'':'precheck'}">
- <section class="scene v8-board v12-board" style="background-image:url('./assets/pacu-three-bed-front-v9.png')">
+ <section class="scene v8-board v12-board" style="background-image:url('./assets/pacu-three-bed-front-v12.png')">
    <div class="walkway" data-walkway aria-label="PACU 行走區"></div>
    <div class="v8-live-score" aria-label="目前總分"><b>${score}</b><span>/ 100</span><small>總分</small></div>
    <div class="v8-live-progress" aria-label="完成病人數"><b>${game.completedPatients}</b><span>/ 3</span><small>完成病人數</small></div>
