@@ -1,12 +1,12 @@
 export const ZONE_TARGETS={
-  'nurse-station':{x:90,y:43},'patient-bay':{x:49,y:42},'medication-cart':{x:7,y:30},
-  'high-alert':{x:88,y:49},'crash-cart':{x:84,y:29},'preparation':{x:13,y:53},
-  'preparation-cart':{x:13,y:53},'documentation':{x:89,y:67},'hand-hygiene':{x:7,y:52},
+  'nurse-station':{x:88,y:47},'patient-bay':{x:51,y:55},'medication-cart':{x:9,y:28},
+  'high-alert':{x:88,y:49},'crash-cart':{x:84,y:29},'preparation':{x:14,y:58},
+  'preparation-cart':{x:14,y:58},'documentation':{x:89,y:67},'hand-hygiene':{x:8,y:49},
 }
-const TASK_TARGETS={notify:{x:89,y:43},verify:{x:89,y:43},check:{x:13,y:53},prepare:{x:13,y:53}}
-const PATIENT_BEDSIDE_TARGETS=[{x:23,y:50},{x:49,y:50},{x:75,y:50}]
+const TASK_TARGETS={notify:{x:87,y:48},verify:{x:87,y:48},check:{x:14,y:58},prepare:{x:14,y:58}}
+const PATIENT_BEDSIDE_TARGETS=[{x:31,y:55},{x:51,y:55},{x:73,y:55}]
 // IV stands are on the left side of each bed in the approved front-facing scene.
-const PATIENT_IV_TARGETS=[{x:18,y:45},{x:43,y:45},{x:68,y:45}]
+const PATIENT_IV_TARGETS=[{x:22,y:53},{x:43,y:53},{x:65,y:53}]
 export function targetForTask(zone,task,activePatientIndex=0){
   if(zone==='patient-bay'){
     if(task==='administer')return PATIENT_IV_TARGETS[activePatientIndex]||PATIENT_IV_TARGETS[0]

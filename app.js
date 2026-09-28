@@ -1,5 +1,5 @@
 import { createGame,performStep,finishGame,updatePlayerPosition,STEPS } from './game/game.js'
-import { homeTemplate,setupTemplate,sceneTemplate,interactionTemplate,resultsTemplate,recordsTemplate } from './ui/templates-v12.js'
+import { homeTemplate,setupTemplate,sceneTemplate,interactionTemplate,resultsTemplate,recordsTemplate } from './ui/templates-v13.js'
 import { createRecordStore,recordsToCsv } from './storage/records.js'
 import { targetForTask,moveToward } from './game/navigation.js'
 import { checkNumericAnswer } from './domain/dosage.js'

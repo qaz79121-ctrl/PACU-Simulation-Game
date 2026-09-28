@@ -34,7 +34,7 @@ function awardFor(step,game){
 }
 export function createGame(mode='practice',caseCode='SIM-01',learnerId=''){
  const patients=patientCases(caseCode),caseData=patients[0]
- return {mode,patients,activePatientIndex:0,completedPatients:0,caseData,learnerId,currentStep:0,events:[],feedback:'',playerPosition:{x:15,y:63},playerZone:'entrance',scores:{patientId:0,medication:0,dosage:0,preparation:15,doubleCheck:0,administration:0,monitoring:0,documentation:0},categoryScores:{patient:0,medication:0,dosage:0,safety:0,administration:0,monitoring:0},attempts:freshAttempts(),mistakes:{medication:0,dosage:0,safety:0,monitoring:0},criticalErrors:[],startedAt:Date.now(),completed:false}
+ return {mode,patients,activePatientIndex:0,completedPatients:0,caseData,learnerId,currentStep:0,events:[],feedback:'',playerPosition:{x:20,y:65},playerZone:'entrance',scores:{patientId:0,medication:0,dosage:0,preparation:15,doubleCheck:0,administration:0,monitoring:0,documentation:0},categoryScores:{patient:0,medication:0,dosage:0,safety:0,administration:0,monitoring:0},attempts:freshAttempts(),mistakes:{medication:0,dosage:0,safety:0,monitoring:0},criticalErrors:[],startedAt:Date.now(),completed:false}
 }
 export function updatePlayerPosition(game,playerPosition,playerZone){return {...game,playerPosition:{...playerPosition},playerZone}}
 function advance(game,step,action,feedback){
