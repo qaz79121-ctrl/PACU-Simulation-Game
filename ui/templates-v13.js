@@ -1,6 +1,6 @@
-import { STEPS } from '../game/game.js'
-import { MEDICATIONS } from '../domain/medications.js'
-import { CASES } from '../domain/cases.js'
+import { STEPS } from '../game/game.js?v=16.1'
+import { MEDICATIONS } from '../domain/medications.js?v=16.1'
+import { CASES } from '../domain/cases.js?v=16.1'
 const disclaimer='<p class="disclaimer">本模擬內容僅供教育訓練。實際臨床處置應依醫囑、院內規範、最新藥品資料及專業判斷執行。</p>'
 export function homeTemplate(){return `<main class="home"><section class="hero"><div class="eyebrow">PACU DIGITAL SIMULATION</div><h1>PACU 藥物任務站</h1><p>在俯視角恢復室中完成評估、選藥、配置、覆核、給藥與監測。</p><div class="mode-grid"><button data-mode="practice"><b>練習模式</b><span>即時提示・可重試</span></button><button data-mode="assessment"><b>正式評核模式</b><span>90 分通過・重大錯誤管制</span></button></div><button class="text-btn" data-records>查看歷次評核紀錄</button></section>${disclaimer}</main>`}
 export function setupTemplate(mode){return `<main class="setup"><button class="back" data-home>← 返回</button><section class="card"><div class="eyebrow">${mode==='practice'?'PRACTICE':'ASSESSMENT'}</div><h2>${mode==='practice'?'練習模式':'正式評核模式'}設定</h2>${mode==='assessment'?'<label>姓名或員工代碼<input id="learner-id" maxlength="30" placeholder="請勿輸入病人資料"></label>':''}<div class="random-case-note"><b>本次案例：</b>由 12 種藥物情境隨機、不重複抽出 3 種，依序分配至 PACU-1、PACU-2、PACU-3。</div><input id="case-select" type="hidden" value="RANDOM"><button class="primary" data-start>進入 PACU</button></section>${disclaimer}</main>`}
