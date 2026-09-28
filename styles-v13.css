@@ -78,3 +78,17 @@ dialog:has(.modal-card.wide){width:min(1180px,calc(100% - 32px));max-height:calc
 /* Cabinet is a single scene hotspot; the twelve choices exist only inside its dialog. */
 .v8-hit-2{z-index:9}
 @media(max-width:800px){.v14-patient-card{left:12px!important;right:auto!important;top:auto!important;bottom:12px!important;max-height:40vh}}
+
+/* v15 bedside assessment, unique patients, and nurse de-ghosting */
+.v13-board .v13-moving-nurse{background-color:transparent!important;box-shadow:none!important;isolation:isolate}
+.v15-patient-head{position:absolute;z-index:4;top:36.7%;width:5.2%;height:10.5%;transform:translate(-50%,-50%);pointer-events:none}
+.v15-patient-head img{width:100%;height:100%;object-fit:contain;display:block}
+.patient-head-1{left:30.25%}.patient-head-2{left:49.45%}.patient-head-3{left:69.65%}
+.patient-complaint{position:absolute;z-index:15;width:18%;min-width:210px;padding:12px 14px;border:3px solid #7dc7f3;border-radius:16px;background:#fff;color:#173b59;box-shadow:0 10px 28px #173b5940;line-height:1.35}
+.patient-complaint:after{content:"";position:absolute;bottom:-15px;border:8px solid transparent;border-top-color:#7dc7f3}
+.patient-complaint small,.patient-complaint strong{display:block}.patient-complaint strong{font-size:clamp(13px,1.05vw,20px);margin:5px 0 7px}.patient-complaint span{display:block;font-size:clamp(9px,.7vw,14px)}
+.patient-complaint button{margin-top:9px;width:100%;padding:7px}
+.complaint-bed-1{left:25%;top:22%}.complaint-bed-1:after{left:28%}.complaint-bed-2{left:43%;top:22%}.complaint-bed-2:after{left:50%}.complaint-bed-3{right:23%;top:22%}.complaint-bed-3:after{right:28%}
+/* v15.1 patient head alignment over the three original faces */
+.v15-patient-head{top:32.4%;width:5.6%;height:11.5%}
+.patient-head-1{left:27.25%}.patient-head-2{left:49.45%}.patient-head-3{left:73.55%}
