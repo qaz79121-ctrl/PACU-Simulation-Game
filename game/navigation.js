@@ -3,7 +3,7 @@ export const ZONE_TARGETS={
   'high-alert':{x:88,y:49},'crash-cart':{x:84,y:29},'preparation':{x:12,y:48},
   'documentation':{x:89,y:67},'hand-hygiene':{x:12,y:18},
 }
-const TASK_TARGETS={notify:{x:61,y:57},check:{x:39,y:57}}
+const TASK_TARGETS={notify:{x:88,y:55},check:{x:39,y:57}}
 const PATIENT_BEDSIDE_TARGETS=[{x:25,y:52},{x:50,y:52},{x:75,y:52}]
 const PATIENT_RIGHT_TARGETS=[{x:37,y:47},{x:59,y:47},{x:80,y:47}]
 export function targetForTask(zone,task,activePatientIndex=0){
