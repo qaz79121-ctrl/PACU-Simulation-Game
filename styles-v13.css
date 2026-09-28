@@ -66,3 +66,15 @@ dialog:has(.modal-card.wide){width:min(1180px,calc(100% - 32px));max-height:calc
 .v13-doctor-hotspot span,.v13-sink-hotspot span,.v13-prep-hotspot span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 /* The doctor is part of the approved scene artwork and is never replaced by a separate avatar. */
 .v12-doctor-station,.v12-sink,.v12-prep-cart{display:none!important}
+
+
+/* v14 workflow fixes */
+.v14-patient-card{left:18px!important;right:auto!important;top:112px!important;width:min(300px,calc(100vw - 36px))!important;max-height:calc(100vh - 140px);font-size:14px}
+.v14-patient-card h3{margin:.2rem 0 .5rem}.v14-patient-card dl{margin:0}.v14-patient-card dl>div{padding:7px 0}.v14-patient-card dd{margin:2px 0 0}
+.random-case-note{padding:14px 16px;border-radius:12px;background:#eef7ff;color:#173b59;line-height:1.55;margin:12px 0 18px}
+/* One visible nurse only. Hide all legacy nurse/patient overlays that can create ghost duplicates. */
+.v13-board .patient-bed-overlay{display:none!important}
+.v13-board .v13-moving-nurse{z-index:12!important}
+/* Cabinet is a single scene hotspot; the twelve choices exist only inside its dialog. */
+.v8-hit-2{z-index:9}
+@media(max-width:800px){.v14-patient-card{left:12px!important;right:auto!important;top:auto!important;bottom:12px!important;max-height:40vh}}

@@ -19,9 +19,10 @@ const CATEGORY_MAX={patient:10,medication:20,dosage:20,safety:20,administration:
 const STEP_CATEGORY={
  assess:'patient',notify:'patient',verify:'patient','wash-before':'safety',medication:'medication',calculate:'dosage',prepare:'safety',check:'safety',administer:'administration',monitor:'monitoring','wash-after':'safety',document:'safety'
 }
-function patientCases(caseCode){
- const start=Math.max(0,CASES.findIndex(c=>c.patient.code===caseCode))
- return [0,1,2].map(offset=>CASES[(start+offset)%CASES.length])
+function patientCases(){
+ const shuffled=[...CASES]
+ for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]]}
+ return shuffled.slice(0,3)
 }
 function freshAttempts(){return {medication:0,dosage:0}}
 function awardFor(step,game){
@@ -33,7 +34,7 @@ function awardFor(step,game){
  return {...game.categoryScores,[category]:Math.min(CATEGORY_MAX[category],game.categoryScores[category]+base*retryFactor)}
 }
 export function createGame(mode='practice',caseCode='SIM-01',learnerId=''){
- const patients=patientCases(caseCode),caseData=patients[0]
+ const patients=patientCases(),caseData=patients[0]
  return {mode,patients,activePatientIndex:0,completedPatients:0,caseData,learnerId,currentStep:0,events:[],feedback:'',playerPosition:{x:20,y:65},playerZone:'entrance',scores:{patientId:0,medication:0,dosage:0,preparation:15,doubleCheck:0,administration:0,monitoring:0,documentation:0},categoryScores:{patient:0,medication:0,dosage:0,safety:0,administration:0,monitoring:0},attempts:freshAttempts(),mistakes:{medication:0,dosage:0,safety:0,monitoring:0},criticalErrors:[],startedAt:Date.now(),completed:false}
 }
 export function updatePlayerPosition(game,playerPosition,playerZone){return {...game,playerPosition:{...playerPosition},playerZone}}

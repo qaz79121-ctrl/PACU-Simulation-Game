@@ -4,9 +4,10 @@ export const ZONE_TARGETS={
   'preparation-cart':{x:14,y:58},'documentation':{x:89,y:67},'hand-hygiene':{x:8,y:49},
 }
 const TASK_TARGETS={notify:{x:87,y:48},verify:{x:87,y:48},check:{x:14,y:58},prepare:{x:14,y:58}}
-const PATIENT_BEDSIDE_TARGETS=[{x:31,y:55},{x:51,y:55},{x:73,y:55}]
+// Assessment/monitoring stops at the physiologic-monitor side of each bed.
+const PATIENT_BEDSIDE_TARGETS=[{x:34,y:43},{x:56,y:43},{x:78,y:43}]
 // IV stands are on the left side of each bed in the approved front-facing scene.
-const PATIENT_IV_TARGETS=[{x:22,y:53},{x:43,y:53},{x:65,y:53}]
+const PATIENT_IV_TARGETS=[{x:22,y:49},{x:43,y:49},{x:65,y:49}]
 export function targetForTask(zone,task,activePatientIndex=0){
   if(zone==='patient-bay'){
     if(task==='administer')return PATIENT_IV_TARGETS[activePatientIndex]||PATIENT_IV_TARGETS[0]

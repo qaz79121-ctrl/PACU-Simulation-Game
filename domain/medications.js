@@ -12,7 +12,7 @@ export const MEDICATIONS = [
   ['dopamine','Dopamine',200,'mg',5,'high-alert'],
   ['easydopa','Easydopa',400,'mg',250,'high-alert',undefined,'Bot'],
 ].map(([id,genericName,amount,unit,volumeMl,risk,brandName,container='Amp']) => ({
-  id,genericName,brandName,volumeMl,risk,container,reviewStatus:'pending-local-review',
+  id,genericName,brandName,volumeMl,risk,container,reviewStatus:'pending-local-review',image:`./assets/drug-${id}.png`,
   ...(unit === 'mcg' ? { amountMcg: amount } : { amountMg: amount }),
   label: `${genericName}${brandName ? `（${brandName}）` : ''} ${amount} ${unit}/${volumeMl} mL/${container}`,
 }))
