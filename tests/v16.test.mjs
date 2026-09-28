@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const tpl=fs.readFileSync(new URL('../ui/templates-v13.js',import.meta.url),'utf8');
+const css=fs.readFileSync(new URL('../styles-v13.css',import.meta.url),'utf8');
+const cases=fs.readFileSync(new URL('../domain/cases.js',import.meta.url),'utf8');
+assert(!tpl.includes('patient-head-'), 'must not create floating patient head assets');
+assert(tpl.includes('patient-replacement patient-1') && tpl.includes('patient-replacement patient-2') && tpl.includes('patient-replacement patient-3'), 'three full patient replacements required');
+assert(css.includes('.patient-replacement'), 'full patient replacement styling required');
+assert(tpl.includes("nurse-cartoon-v13.png"), 'full-body v13 nurse must be used');
+assert(!tpl.includes('nurse-cartoon-v15.png'), 'cropped v15 nurse must not be used');
+assert(cases.includes('護理師，我傷口真的很痛'), 'complaints must be conversational');
+assert(cases.includes('護理師，我好冷'), 'shivering complaint must be conversational');
+console.log('v16 static tests passed');

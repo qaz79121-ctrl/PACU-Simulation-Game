@@ -20,10 +20,14 @@ export function sceneTemplate(game){
    <button class="v13-doctor-hotspot" data-zone="nurse-station" aria-label="照片中的護理站醫師・ISBAR通報"><span>醫師 ISBAR 通報</span></button>
    <button class="v13-sink-hotspot" data-zone="hand-hygiene" aria-label="洗手台"><span>洗手台</span></button>
    <button class="v13-prep-hotspot" data-zone="preparation-cart" aria-label="左側電腦藥物車"><span>電腦藥物車</span></button>
-   <div class="nurse-avatar v8-moving-nurse v13-moving-nurse" data-nurse data-direction="up" style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v15.png')"><span>護理師</span></div>
+   <div class="patient-replacement patient-1 young-female" aria-label="PACU-1 年輕女性病人"><i class="hair"></i><i class="face"></i><i class="oxygen"></i><i class="body"></i><i class="blanket"></i></div>
+   <div class="patient-replacement patient-2 elderly-male" aria-label="PACU-2 老年男性病人"><i class="hair"></i><i class="face"></i><i class="oxygen"></i><i class="body"></i><i class="blanket"></i></div>
+   <div class="patient-replacement patient-3 young-male" aria-label="PACU-3 年輕男性病人"><i class="hair"></i><i class="face"></i><i class="oxygen"></i><i class="body"></i><i class="blanket"></i></div>
+   <div class="patient-complaint" data-patient-complaint role="status" aria-live="polite"></div>
+   <div class="nurse-avatar v8-moving-nurse v13-moving-nurse" data-nurse data-direction="up" style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v13.png')"><span>護理師</span></div>
    ${legacyZones}<span class="v8-sr-only task-beacon active-patient">${score} / 100 ${game.completedPatients} / 3 點擊設備，護理師會從目前位置走到下一站。PACU-1 病床區 常備藥車 高警訊藥櫃 急救車 配置工作台 雙人核對 電子紀錄</span>
    ${(game.patients||[]).map((c,i)=>`<span class="v8-sr-only wall-monitor-data monitor-patient-${i+1}">${c.patient.vitals.hr} ${c.patient.vitals.bp} ${c.patient.vitals.spo2} ${c.patient.vitals.rr}<span class="vital-hr"><i>HR</i><b>${c.patient.vitals.hr}</b></span><span class="vital-bp"><i>BP</i><b>${c.patient.vitals.bp}</b></span><span class="vital-spo2"><i>SpO₂</i><b>${c.patient.vitals.spo2}%</b></span><span class="vital-rr"><i>RR</i><b>${c.patient.vitals.rr}</b></span></span>`).join('')}
-   ${[1,2,3].map(n=>`<span class="v15-patient-head patient-head-${n}"><img src="./assets/patient-head-${n}.svg" alt="PACU-${n} 不同病人外觀"></span>`).join('')}
+   ${[1,2,3].map(n=>`<span class="v8-sr-only patient-bed-overlay patient-bed-${n}"><img src="./assets/patient-illustration-v1.webp" alt="PACU-${n} 病人"></span>`).join('')}
  </section>
  ${verified?`<aside class="patient-card v8-patient-card v14-patient-card"><div><small>目前 PACU-${game.activePatientIndex+1}</small><h3>${p.code}</h3></div><dl><div><dt>情境</dt><dd>${game.caseData.topic}</dd></div><div><dt>年齡</dt><dd>${p.age} 歲</dd></div><div><dt>體重</dt><dd>${p.weightKg} kg</dd></div><div><dt>過敏史</dt><dd>${p.allergy}</dd></div><div class="order-row"><dt>醫囑</dt><dd>${o.text}</dd></div></dl></aside>`:''}
  <div id="feedback" class="feedback ${game.feedback?'show':''}" role="status">${game.feedback}</div>${disclaimer}</main>`
