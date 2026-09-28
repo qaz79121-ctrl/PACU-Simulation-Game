@@ -1,8 +1,8 @@
-import { createGame,performStep,finishGame,updatePlayerPosition,STEPS } from './game/game.js?v=16.1'
-import { homeTemplate,setupTemplate,sceneTemplate,interactionTemplate,resultsTemplate,recordsTemplate } from './ui/templates-v13.js?v=16.1'
-import { createRecordStore,recordsToCsv } from './storage/records.js?v=16.1'
-import { targetForTask,moveToward } from './game/navigation.js?v=16.1'
-import { checkNumericAnswer } from './domain/dosage.js?v=16.1'
+import { createGame,performStep,finishGame,updatePlayerPosition,STEPS } from './game/game.js'
+import { homeTemplate,setupTemplate,sceneTemplate,interactionTemplate,resultsTemplate,recordsTemplate } from './ui/templates-v13.js'
+import { createRecordStore,recordsToCsv } from './storage/records.js'
+import { targetForTask,moveToward } from './game/navigation.js'
+import { checkNumericAnswer } from './domain/dosage.js'
 const app=document.querySelector('#app'); const store=createRecordStore(); let game=null,selectedZone=null
 function render(html){app.innerHTML=html;bind()}
 function bind(){
