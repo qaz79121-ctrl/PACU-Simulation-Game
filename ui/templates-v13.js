@@ -1,6 +1,6 @@
-import { STEPS } from '../game/game.js?v=16.1'
-import { MEDICATIONS } from '../domain/medications.js?v=16.1'
-import { CASES } from '../domain/cases.js?v=16.1'
+import { STEPS } from '../game/game.js'
+import { MEDICATIONS } from '../domain/medications.js'
+import { CASES } from '../domain/cases.js'
 const disclaimer='<p class="disclaimer">本模擬內容僅供教育訓練。實際臨床處置應依醫囑、院內規範、最新藥品資料及專業判斷執行。</p>'
 export function homeTemplate(){return `<main class="home"><section class="hero"><div class="eyebrow">PACU DIGITAL SIMULATION</div><h1>PACU 藥物任務站</h1><p>在俯視角恢復室中完成評估、選藥、配置、覆核、給藥與監測。</p><div class="mode-grid"><button data-mode="practice"><b>練習模式</b><span>即時提示・可重試</span></button><button data-mode="assessment"><b>正式評核模式</b><span>90 分通過・重大錯誤管制</span></button></div><button class="text-btn" data-records>查看歷次評核紀錄</button></section>${disclaimer}</main>`}
 export function setupTemplate(mode){return `<main class="setup"><button class="back" data-home>← 返回</button><section class="card"><div class="eyebrow">${mode==='practice'?'PRACTICE':'ASSESSMENT'}</div><h2>${mode==='practice'?'練習模式':'正式評核模式'}設定</h2>${mode==='assessment'?'<label>姓名或員工代碼<input id="learner-id" maxlength="30" placeholder="請勿輸入病人資料"></label>':''}<div class="random-case-note"><b>本次案例：</b>由 12 種藥物情境隨機、不重複抽出 3 種，依序分配至 PACU-1、PACU-2、PACU-3。</div><input id="case-select" type="hidden" value="RANDOM"><button class="primary" data-start>進入 PACU</button></section>${disclaimer}</main>`}
@@ -20,14 +20,10 @@ export function sceneTemplate(game){
    <button class="v13-doctor-hotspot" data-zone="nurse-station" aria-label="照片中的護理站醫師・ISBAR通報"><span>醫師 ISBAR 通報</span></button>
    <button class="v13-sink-hotspot" data-zone="hand-hygiene" aria-label="洗手台"><span>洗手台</span></button>
    <button class="v13-prep-hotspot" data-zone="preparation-cart" aria-label="左側電腦藥物車"><span>電腦藥物車</span></button>
-   <div class="patient-replacement patient-1 young-female" aria-label="PACU-1 年輕女性病人"><i class="hair"></i><i class="face"></i><i class="oxygen"></i><i class="body"></i><i class="blanket"></i></div>
-   <div class="patient-replacement patient-2 elderly-male" aria-label="PACU-2 老年男性病人"><i class="hair"></i><i class="face"></i><i class="oxygen"></i><i class="body"></i><i class="blanket"></i></div>
-   <div class="patient-replacement patient-3 young-male" aria-label="PACU-3 年輕男性病人"><i class="hair"></i><i class="face"></i><i class="oxygen"></i><i class="body"></i><i class="blanket"></i></div>
-   <div class="patient-complaint" data-patient-complaint role="status" aria-live="polite"></div>
-   <div class="nurse-avatar v8-moving-nurse v13-moving-nurse" data-nurse data-direction="up" style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v13.png')"><span>護理師</span></div>
+   <div class="nurse-avatar v8-moving-nurse v13-moving-nurse" data-nurse data-direction="up" style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v15.png')"><span>護理師</span></div>
    ${legacyZones}<span class="v8-sr-only task-beacon active-patient">${score} / 100 ${game.completedPatients} / 3 點擊設備，護理師會從目前位置走到下一站。PACU-1 病床區 常備藥車 高警訊藥櫃 急救車 配置工作台 雙人核對 電子紀錄</span>
    ${(game.patients||[]).map((c,i)=>`<span class="v8-sr-only wall-monitor-data monitor-patient-${i+1}">${c.patient.vitals.hr} ${c.patient.vitals.bp} ${c.patient.vitals.spo2} ${c.patient.vitals.rr}<span class="vital-hr"><i>HR</i><b>${c.patient.vitals.hr}</b></span><span class="vital-bp"><i>BP</i><b>${c.patient.vitals.bp}</b></span><span class="vital-spo2"><i>SpO₂</i><b>${c.patient.vitals.spo2}%</b></span><span class="vital-rr"><i>RR</i><b>${c.patient.vitals.rr}</b></span></span>`).join('')}
-   ${[1,2,3].map(n=>`<span class="v8-sr-only patient-bed-overlay patient-bed-${n}"><img src="./assets/patient-illustration-v1.webp" alt="PACU-${n} 病人"></span>`).join('')}
+   ${[1,2,3].map(n=>`<span class="v15-patient-head patient-head-${n}"><img src="./assets/patient-head-${n}.svg" alt="PACU-${n} 不同病人外觀"></span>`).join('')}
  </section>
  ${verified?`<aside class="patient-card v8-patient-card v14-patient-card"><div><small>目前 PACU-${game.activePatientIndex+1}</small><h3>${p.code}</h3></div><dl><div><dt>情境</dt><dd>${game.caseData.topic}</dd></div><div><dt>年齡</dt><dd>${p.age} 歲</dd></div><div><dt>體重</dt><dd>${p.weightKg} kg</dd></div><div><dt>過敏史</dt><dd>${p.allergy}</dd></div><div class="order-row"><dt>醫囑</dt><dd>${o.text}</dd></div></dl></aside>`:''}
  <div id="feedback" class="feedback ${game.feedback?'show':''}" role="status">${game.feedback}</div>${disclaimer}</main>`

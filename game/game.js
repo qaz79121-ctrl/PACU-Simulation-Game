@@ -1,5 +1,5 @@
-import { CASES } from '../domain/cases.js?v=16.1'
-import { scoreSession } from '../domain/scoring.js?v=16.1'
+import { CASES } from '../domain/cases.js'
+import { scoreSession } from '../domain/scoring.js'
 
 export const STEPS=[
  {zone:'patient-bay',title:'評估病人狀態',prompt:'先觀察病況、生命徵象與臨床表徵。',correct:'assess',dimension:'monitoring',points:5},
