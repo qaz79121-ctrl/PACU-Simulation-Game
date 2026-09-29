@@ -279,3 +279,48 @@ dialog:has(.modal-card.wide){width:min(1180px,calc(100% - 32px));max-height:calc
   font-weight:800!important;
   line-height:1!important;
 }
+
+
+/* v15.5 — restore the proven moving-nurse renderer, full body always visible */
+.scene.v8-board.v12-board.v13-board .v155-fullbody-nurse{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:30!important;
+  width:8.3%!important;
+  height:36%!important;
+  padding:0!important;
+  border:0!important;
+  background-color:transparent!important;
+  background-size:contain!important;
+  background-position:center bottom!important;
+  background-repeat:no-repeat!important;
+  overflow:visible!important;
+  pointer-events:none!important;
+  filter:drop-shadow(0 .3vw .22vw rgba(23,59,89,.28))!important;
+}
+.scene.v8-board.v12-board.v13-board .v155-fullbody-nurse.walking{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  animation:v13-walk-bob .34s ease-in-out infinite alternate!important;
+}
+
+/* Do not let the live HUD intrude into the PACU logo or adjacent artwork. */
+.scene.v8-board.v12-board.v13-board .v8-live-score{
+  left:29.05%!important;
+  width:12.95%!important;
+}
+.scene.v8-board.v12-board.v13-board .v8-live-progress{
+  left:42.85%!important;
+  width:12.55%!important;
+}
+
+/* Render the original 2048x1152 scene pixel-for-pixel across the board.
+   This prevents stretching/cropping that can make PACU-1 look mis-joined. */
+.scene.v8-board.v12-board.v13-board{
+  aspect-ratio:2048/1152!important;
+  background-size:100% 100%!important;
+  background-position:0 0!important;
+  background-repeat:no-repeat!important;
+}
