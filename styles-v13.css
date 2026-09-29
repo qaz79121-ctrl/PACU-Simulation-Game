@@ -136,3 +136,64 @@ dialog:has(.modal-card.wide){width:min(1180px,calc(100% - 32px));max-height:calc
   .v8-live-score,.v8-live-progress{border-radius:10px;box-shadow:0 3px 10px rgba(17,58,83,.14)}
   .v8-live-score::before,.v8-live-progress::before{width:4px}
 }
+
+
+/* v15.3 — full-body nurse + HUD flush with the original top panel */
+
+/* Keep the complete nurse PNG visible, including both shoes/feet. */
+.v13-board .v13-moving-nurse{
+  width:8.3%!important;
+  height:39%!important;
+  background-size:contain!important;
+  background-position:center bottom!important;
+  background-repeat:no-repeat!important;
+  overflow:visible!important;
+}
+
+/* Score / completed-patient fields sit inside and cover the original HUD slots.
+   Opaque fill prevents the old printed numbers underneath from ghosting through. */
+.v13-board .v8-live-score,
+.v13-board .v8-live-progress{
+  top:1.15%!important;
+  height:8.05%!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:.75vw!important;
+  background:#eef8ff!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+  gap:.22vw!important;
+}
+.v13-board .v8-live-score{
+  left:26.25%!important;
+  width:13.25%!important;
+}
+.v13-board .v8-live-progress{
+  left:41.55%!important;
+  width:13.10%!important;
+}
+.v13-board .v8-live-score::before,
+.v13-board .v8-live-progress::before{
+  display:none!important;
+}
+.v13-board .v8-live-score b,
+.v13-board .v8-live-progress b{
+  font-size:clamp(19px,2.05vw,42px)!important;
+  line-height:1!important;
+  text-shadow:none!important;
+}
+.v13-board .v8-live-score span,
+.v13-board .v8-live-progress span{
+  font-size:clamp(12px,1.05vw,22px)!important;
+  color:#506d83!important;
+}
+.v13-board .v8-live-score small,
+.v13-board .v8-live-progress small{
+  bottom:4%!important;
+  padding:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#173b59!important;
+  font-size:clamp(8px,.68vw,14px)!important;
+  letter-spacing:.03em!important;
+}

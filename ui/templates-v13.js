@@ -14,13 +14,13 @@ export function sceneTemplate(game){
  <section class="scene v8-board v12-board v13-board" style="background-image:url('./assets/pacu-three-bed-front-v13.png')">
    <div class="walkway" data-walkway aria-label="PACU 行走區"></div><span class="v8-sr-only">PACU-1 PACU-2 PACU-3</span>
    <div class="v8-live-score" aria-label="目前總分"><b>${score}</b><span>/ 100</span><small>總分</small></div>
-   <div class="v8-live-progress" aria-label="完成病人數"><b>${game.completedPatients}</b><span>/ 3</span><small>病人進度</small></div>
+   <div class="v8-live-progress" aria-label="完成病人數"><b>${game.completedPatients}</b><span>/ 3</span><small>完成病人數</small></div>
    <div class="v8-active-task"><small>目前：PACU-${game.activePatientIndex+1}</small><b>${s.title}</b></div>
    ${actionZones.map(([action,zone,label],i)=>`<button class="v8-hit v8-hit-${i+1}" data-v8-action="${action}" data-zone="${zone}" aria-label="${label}"><span>${label}</span></button>`).join('')}
    <button class="v13-doctor-hotspot" data-zone="nurse-station" aria-label="照片中的護理站醫師・ISBAR通報"><span>醫師 ISBAR 通報</span></button>
    <button class="v13-sink-hotspot" data-zone="hand-hygiene" aria-label="洗手台"><span>洗手台</span></button>
    <button class="v13-prep-hotspot" data-zone="preparation-cart" aria-label="左側電腦藥物車"><span>電腦藥物車</span></button>
-   <div class="nurse-avatar v8-moving-nurse v13-moving-nurse" data-nurse data-direction="up" style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v15.png')"><span>護理師</span></div>
+   <div class="nurse-avatar v8-moving-nurse v13-moving-nurse" data-nurse data-direction="up" style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v153.png?v=15.3')"><span>護理師</span></div>
    ${legacyZones}<span class="v8-sr-only task-beacon active-patient">${score} / 100 ${game.completedPatients} / 3 點擊設備，護理師會從目前位置走到下一站。PACU-1 病床區 常備藥車 高警訊藥櫃 急救車 配置工作台 雙人核對 電子紀錄</span>
    ${(game.patients||[]).map((c,i)=>`<span class="v8-sr-only wall-monitor-data monitor-patient-${i+1}">${c.patient.vitals.hr} ${c.patient.vitals.bp} ${c.patient.vitals.spo2} ${c.patient.vitals.rr}<span class="vital-hr"><i>HR</i><b>${c.patient.vitals.hr}</b></span><span class="vital-bp"><i>BP</i><b>${c.patient.vitals.bp}</b></span><span class="vital-spo2"><i>SpO₂</i><b>${c.patient.vitals.spo2}%</b></span><span class="vital-rr"><i>RR</i><b>${c.patient.vitals.rr}</b></span></span>`).join('')}
  </section>
