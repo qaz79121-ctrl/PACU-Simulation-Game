@@ -92,3 +92,47 @@ dialog:has(.modal-card.wide){width:min(1180px,calc(100% - 32px));max-height:calc
 /* v15.1 patient head alignment over the three original faces */
 .v15-patient-head{top:32.4%;width:5.6%;height:11.5%}
 .patient-head-1{left:27.25%}.patient-head-2{left:49.45%}.patient-head-3{left:73.55%}
+
+
+/* v15.2 — remove extra bedside heads and refine score/progress HUD */
+.v15-patient-head{display:none!important}
+
+.v8-live-score,.v8-live-progress{
+  top:1.15%;
+  height:8.25%;
+  border:1px solid rgba(255,255,255,.94);
+  border-radius:1.15vw;
+  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(236,247,250,.96));
+  box-shadow:0 .38vw 1.1vw rgba(17,58,83,.18),inset 0 1px 0 rgba(255,255,255,.95);
+  overflow:hidden;
+  gap:.24vw;
+  color:#123a5c;
+}
+.v8-live-score{left:26.15%;width:13.45%}
+.v8-live-progress{left:41.45%;width:13.45%}
+.v8-live-score::before,.v8-live-progress::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:.38vw;min-width:4px;
+  border-radius:1.15vw 0 0 1.15vw;
+}
+.v8-live-score::before{background:linear-gradient(#13a89e,#0b7f7a)}
+.v8-live-progress::before{background:linear-gradient(#3f9fd8,#2474ae)}
+.v8-live-score b,.v8-live-progress b{
+  font-size:clamp(20px,2.25vw,46px);line-height:1;letter-spacing:-.035em;
+  font-variant-numeric:tabular-nums;text-shadow:0 1px 0 #fff;
+}
+.v8-live-score b{color:#087c76}
+.v8-live-progress b{color:#246f9f}
+.v8-live-score span,.v8-live-progress span{
+  color:#6c8291;font-size:clamp(12px,1.15vw,24px);font-weight:800;
+  align-self:center;margin-top:.1vw;
+}
+.v8-live-score small,.v8-live-progress small{
+  left:50%;bottom:5%;transform:translateX(-50%);width:max-content;
+  padding:.1vw .55vw;border-radius:999px;background:rgba(228,241,246,.88);
+  color:#496675;font-size:clamp(8px,.72vw,15px);font-weight:900;
+  letter-spacing:.08em;line-height:1.35;
+}
+@media(max-width:800px){
+  .v8-live-score,.v8-live-progress{border-radius:10px;box-shadow:0 3px 10px rgba(17,58,83,.14)}
+  .v8-live-score::before,.v8-live-progress::before{width:4px}
+}
