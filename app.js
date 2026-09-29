@@ -160,7 +160,7 @@ function bindModal (modal) {
       const value = b.dataset.action
 
       // Dose calculation check
-      if (selectedZone === 'preparation' && value === 'calculate') {
+      if (selectedZone === 'preparation-cart' && value === 'calculate') {
         const input = modal.querySelector('#dose-answer')
         const expected = Number(input.dataset.expected)
         if (!checkNumericAnswer(input.value, expected, 0.001)) {

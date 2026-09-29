@@ -32,18 +32,6 @@ export function setupTemplate (mode) {
   </section>${disclaimer}</main>`
 }
 
-/* ── Zone mapping for hotspot buttons ── */
-const zones = [
-  ['nurse-station', '護理站', '回報・醫囑・雙人核對'],
-  ['patient-bay', '病床區', '評估・給藥'],
-  ['hand-hygiene', '洗手台', '手部衛生'],
-  ['medication-cart', '常備藥車', '藥物辨識'],
-  ['high-alert', '高警訊藥櫃', '安全管制'],
-  ['crash-cart', '急救車', '緊急用藥'],
-  ['preparation-cart', '左側電腦藥物車', '準備／抽藥'],
-  ['documentation', '電子紀錄', '給藥紀錄'],
-]
-
 /* ── Step progress dots ── */
 function stepProgressHtml (currentStep, totalSteps) {
   const dots = Array.from({ length: totalSteps }, (_, i) => {
@@ -65,25 +53,6 @@ export function sceneTemplate (game) {
   const verified = game.currentStep > 2
   const score = Math.round(Object.values(game.categoryScores || {}).reduce((a, b) => a + b, 0))
 
-  const actionZones = [
-    ['patient', 'patient-bay', '病人資料'],
-    ['cabinet', 'medication-cart', '藥物櫃'],
-    ['dose', 'preparation', '劑量計算'],
-    ['prepare', 'preparation-cart', '準備藥物'],
-    ['check', 'nurse-station', '給藥確認'],
-    ['administer', 'patient-bay', '給藥'],
-    ['monitor', 'patient-bay', '給藥後監測'],
-    ['complete', 'documentation', '完成關卡'],
-  ]
-
-  const legacyZones = zones.map(([, label, sub]) => `<span class="v8-sr-only">${label} ${sub}</span>`).join('')
-
-  /* Mark hotspot buttons whose zone matches the current step */
-  const hitButtons = actionZones.map(([action, zone, label], i) => {
-    const isCurrent = zone === s.zone ? ' current-zone' : ''
-    return `<button class="v8-hit v8-hit-${i + 1}${isCurrent}" data-v8-action="${action}" data-zone="${zone}" aria-label="${label}"><span>${label}</span></button>`
-  }).join('')
-
   /* Wall monitor vitals for all three beds */
   const monitors = (game.patients || []).map((c, i) =>
     `<span class="wall-monitor-data monitor-patient-${i + 1}">
@@ -94,10 +63,22 @@ export function sceneTemplate (game) {
     </span>`
   ).join('')
 
+  /* Scene hotspots — clickable zones on the background */
+  const sceneHotspots = `
+    <button class="v13-bed-hotspot v13-bed-1 ${s.zone === 'patient-bay' && game.activePatientIndex === 0 ? 'current-zone' : ''}" data-zone="patient-bay" data-bed="0" aria-label="PACU-1 病床"><span>PACU-1</span></button>
+    <button class="v13-bed-hotspot v13-bed-2 ${s.zone === 'patient-bay' && game.activePatientIndex === 1 ? 'current-zone' : ''}" data-zone="patient-bay" data-bed="1" aria-label="PACU-2 病床"><span>PACU-2</span></button>
+    <button class="v13-bed-hotspot v13-bed-3 ${s.zone === 'patient-bay' && game.activePatientIndex === 2 ? 'current-zone' : ''}" data-zone="patient-bay" data-bed="2" aria-label="PACU-3 病床"><span>PACU-3</span></button>
+    <button class="v13-doctor-hotspot ${s.zone === 'nurse-station' ? 'current-zone' : ''}" data-zone="nurse-station" aria-label="護理站・醫師 ISBAR 通報"><span>醫師<br>(ISBAR通報)</span></button>
+    <button class="v13-sink-hotspot ${s.zone === 'hand-hygiene' ? 'current-zone' : ''}" data-zone="hand-hygiene" aria-label="洗手台"><span>🤚 洗手台</span></button>
+    <button class="v13-prep-hotspot ${s.zone === 'preparation-cart' ? 'current-zone' : ''}" data-zone="preparation-cart" aria-label="電腦藥物車（準備藥物）"><span>💊 電腦藥物車<br>(準備藥物)</span></button>
+    <button class="v13-dblcheck-hotspot ${s.zone === 'double-check' ? 'current-zone' : ''}" data-zone="double-check" aria-label="雙人核對"><span>✅ 雙人核對</span></button>
+    <button class="v13-doc-hotspot ${s.zone === 'documentation' ? 'current-zone' : ''}" data-zone="documentation" aria-label="電子紀錄"><span>📋 電子紀錄</span></button>
+    <button class="v13-nursestation-hotspot ${s.zone === 'nurse-station' ? 'current-zone' : ''}" data-zone="nurse-station" aria-label="護理站"><span>護理站</span></button>
+  `
+
   return `<main class="game-shell v8-shell ${verified ? '' : 'precheck'}">
   <section class="scene v8-board v13-board" style="background-image:url('./assets/pacu-three-bed-front-v13.png')">
     <div class="walkway" data-walkway aria-label="PACU 行走區"></div>
-    <span class="v8-sr-only">PACU-1 PACU-2 PACU-3</span>
 
     <div class="v8-live-score" aria-label="目前總分"><b>${score}</b><span>/ 100</span><small>總分</small></div>
     <div class="v8-live-progress" aria-label="完成病人數"><b>${game.completedPatients}</b><span>/ 3</span><small>完成病人數</small></div>
@@ -108,19 +89,13 @@ export function sceneTemplate (game) {
       <b>${s.title}</b>
     </div>
 
-    ${hitButtons}
-
-    <button class="v13-doctor-hotspot" data-zone="nurse-station" aria-label="照片中的護理站醫師・ISBAR通報"><span>醫師 ISBAR 通報</span></button>
-    <button class="v13-sink-hotspot" data-zone="hand-hygiene" aria-label="洗手台"><span>洗手台</span></button>
-    <button class="v13-prep-hotspot" data-zone="preparation-cart" aria-label="左側電腦藥物車"><span>電腦藥物車</span></button>
+    ${sceneHotspots}
 
     <div class="nurse-avatar v13-moving-nurse" data-nurse data-direction="up"
-         style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v153.png?v=16')">
+         style="left:${pos.x}%;top:${pos.y}%;background-image:url('./assets/nurse-cartoon-v153.png?v=17')">
       <span>護理師</span>
     </div>
 
-    ${legacyZones}
-    <span class="v8-sr-only">${score} / 100 ${game.completedPatients} / 3 點擊設備，護理師會從目前位置走到下一站。</span>
     ${monitors}
   </section>
 
@@ -149,10 +124,6 @@ function monitorPanel (p) {
     <div><small>SpO₂</small><b>${p.vitals.spo2}</b><span>%</span></div>
     <div><small>RR</small><b>${p.vitals.rr}</b><span>/min</span></div>
   </div>`
-}
-
-function medicationImage (m) {
-  return `<img class="drug-image medication-photo" src="${m.image}" alt="${m.genericName} 藥物正反面">`
 }
 
 /* ── Interaction dialog content ── */
@@ -198,18 +169,51 @@ export function interactionTemplate (zone, game) {
       <button class="primary" data-action="${step.correct}">完成${step.title}</button>
       <button data-close>返回場景</button></div>`
 
-  if (zone === 'medication-cart')
-    return `<div class="modal-card wide"><span class="eyebrow">藥物辨識</span>
-      <h2>依醫囑選擇藥物</h2>
+  /* Drug selection — 37 real drug photos at the preparation cart */
+  if (zone === 'preparation-cart' && step.correct === null)
+    return `<div class="modal-card wide"><span class="eyebrow">電腦藥物車・藥物辨識</span>
+      <h2>依醫囑選擇正確藥物</h2>
       <div class="clinical-order"><small>醫囑</small><b>${o.text}</b></div>
       <div class="drug-grid">${MEDICATIONS.map(m =>
-        `<button data-action="${m.id}" class="drug ${m.risk === 'high-alert' ? 'high' : ''}">
-          ${medicationImage(m)}<b>${m.genericName}</b>
-          <small>${m.label.replace(m.genericName, '')}</small>
-          ${m.risk === 'high-alert' ? '<em>HIGH ALERT</em>' : ''}
+        `<button data-action="${m.id}" class="drug ${m.risk === 'high-alert' ? 'high' : m.risk === 'emergency' ? 'emergency' : ''}">
+          <img class="drug-photo" src="${m.image}" alt="${m.label}" loading="lazy">
+          <b>${m.label}</b>
+          ${m.risk === 'high-alert' ? '<em>HIGH ALERT</em>' : m.risk === 'emergency' ? '<em>急救</em>' : ''}
         </button>`).join('')}</div>
-      <p class="micro">藥品圖為教學用繪製圖；實際資料仍須依院內規範、藥品標示與藥師審閱確認。</p></div>`
+      <p class="micro">藥品圖為教學用圖片；實際資料仍須依院內規範、藥品標示與藥師審閱確認。</p></div>`
 
+  /* Dose calculation — also at preparation cart now */
+  if (zone === 'preparation-cart' && step.correct === 'calculate')
+    return `<div class="modal-card"><span class="eyebrow">電腦藥物車・劑量換算</span>
+      <h2>${step.prompt}</h2>
+      <div class="clinical-order"><small>醫囑</small><b>${o.text}</b><span>現有規格：${o.stock}</span></div>
+      <label>應抽取量（${o.answerUnit}）<input id="dose-answer" inputmode="decimal" data-expected="${o.expectedDraw}" placeholder="輸入數值"></label>
+      <p class="calculation-answer" hidden>換算：${o.calculation}</p>
+      <p class="dose-error" role="alert"></p>
+      <button class="primary" data-action="calculate">確認計算並完成配置</button>
+      <button data-action="wrong-dose" class="danger-soft">跳過</button>
+      <button data-close>返回場景</button></div>`
+
+  /* Prepare drug — at preparation cart */
+  if (zone === 'preparation-cart' && step.correct === 'prepare')
+    return `<div class="modal-card"><span class="eyebrow">電腦藥物車</span>
+      <h2>準備／抽取藥物</h2>
+      <div class="clinical-order"><small>醫囑</small><b>${o.text}</b><span>現有規格：${o.stock}</span></div>
+      <p>已完成手部衛生與劑量換算。請在電腦藥物車核對標示並完成抽藥。</p>
+      <button class="primary" data-action="prepare">完成藥物準備</button>
+      <button data-close>返回場景</button></div>`
+
+  /* Double check — new zone */
+  if (zone === 'double-check' && step.correct === 'check')
+    return `<div class="modal-card"><span class="eyebrow">雙人核對</span>
+      <h2>執行雙人核對</h2>
+      <div class="clinical-order"><small>醫囑</small><b>${o.text}</b><span>現有規格：${o.stock}</span></div>
+      <p>與覆核護理師完成：病人身分、藥物名稱、劑量、給藥途徑、時間與配置核對。</p>
+      <button class="primary" data-action="check">完成獨立雙人核對</button>
+      <button data-action="wrong" data-critical="missed-double-check" class="danger-soft">跳過核對</button>
+      <button data-close>返回場景</button></div>`
+
+  /* Hand hygiene (fallback for zone match) */
   if (zone === 'hand-hygiene')
     return `<div class="modal-card handwash-card"><span class="eyebrow">手部衛生</span>
       <h2>${step.title}</h2><p>${step.prompt}</p>
@@ -217,32 +221,19 @@ export function interactionTemplate (zone, game) {
       <button class="primary" data-action="${step.correct}">完成${step.title}</button>
       <button data-close>返回場景</button></div>`
 
-  if (zone === 'preparation-cart' && step.correct === 'prepare')
-    return `<div class="modal-card"><span class="eyebrow">左側電腦藥物車</span>
-      <h2>準備／抽取藥物</h2>
-      <div class="clinical-order"><small>醫囑</small><b>${o.text}</b><span>現有規格：${o.stock}</span></div>
-      <p>已完成手部衛生與劑量換算。請在電腦藥物車核對標示並完成抽藥。</p>
-      <button class="primary" data-action="prepare">完成藥物準備</button>
-      <button data-close>返回場景</button></div>`
-
+  /* Generic fallback for other zones */
   const actions = {
-    'nurse-station': step.correct === 'check' ? ['check', '與覆核護理師完成獨立雙人核對'] : ['verify', '完成病人、過敏史與醫囑核對'],
+    'nurse-station': ['verify', '完成病人、過敏史與醫囑核對'],
     'patient-bay': [step.correct, step.title],
-    'preparation': ['calculate', '確認計算並完成配置'],
     'documentation': ['document', '完成醫囑、給藥時間、劑量、途徑與反應紀錄'],
   }
-  const [value, label] = actions[zone]
+  const [value, label] = actions[zone] || [step.correct, step.title]
 
   return `<div class="modal-card"><span class="eyebrow">${step.title}</span>
     <h2>${step.prompt}</h2>
     <div class="clinical-order"><small>醫囑</small><b>${o.text}</b><span>現有規格：${o.stock}</span></div>
-    ${zone === 'preparation'
-      ? `<label>應抽取量（${o.answerUnit}）<input id="dose-answer" inputmode="decimal" data-expected="${o.expectedDraw}" placeholder="輸入數值"></label>
-         <p class="calculation-answer" hidden>換算：${o.calculation}</p>
-         <p class="dose-error" role="alert"></p>`
-      : ''}
     <button class="primary" data-action="${value}">${label}</button>
-    <button data-action="wrong" data-critical="${step.correct === 'check' ? 'missed-double-check' : ''}" class="danger-soft">跳過／選擇其他處置</button>
+    <button data-action="wrong" class="danger-soft">跳過／選擇其他處置</button>
     <button data-close>返回場景</button></div>`
 }
 

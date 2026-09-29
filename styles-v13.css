@@ -113,16 +113,16 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 /* ── HUD: score + progress overlays ── */
 .v8-live-score, .v8-live-progress {
   position: absolute; z-index: 6;
-  top: 1.15%; height: 8.05%;
+  top: 0.3%; height: 10.8%;
   display: flex; align-items: center; justify-content: center;
   gap: .22vw;
   border-radius: .75vw;
-  background: #eef8ff;
+  background: #ecf6fc;
   color: #123a5c; font-weight: 900;
   overflow: hidden;
 }
-.v8-live-score  { left: 26.25%; width: 13.25%; }
-.v8-live-progress { left: 41.55%; width: 13.10%; }
+.v8-live-score  { left: 32.6%; width: 7.0%; }
+.v8-live-progress { left: 44.2%; width: 7.8%; }
 .v8-live-score b, .v8-live-progress b {
   font-size: clamp(19px, 2.05vw, 42px); line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -193,29 +193,46 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   to   { box-shadow: 0 0 0 3px #2fc4bd33; }
 }
 
-/* ── Bottom hotspot buttons ── */
-.v8-hit {
-  position: absolute; z-index: 5; bottom: 1.3%;
-  height: 8.9%; border: 0; background: transparent;
-  border-radius: 1vw; cursor: pointer; color: transparent;
+/* ── Scene hotspot zones (clickable areas on the background) ── */
+.v13-bed-hotspot,
+.v13-dblcheck-hotspot,
+.v13-doc-hotspot,
+.v13-nursestation-hotspot {
+  position: absolute; z-index: 7; border: 0;
+  background: transparent; color: transparent;
+  cursor: pointer; border-radius: 1vw;
 }
-.v8-hit:hover, .v8-hit:focus-visible {
-  outline: .28vw solid #1d84d6; outline-offset: -.28vw; background: #dff2ff22;
+.v13-bed-hotspot:hover, .v13-bed-hotspot:focus-visible,
+.v13-dblcheck-hotspot:hover, .v13-dblcheck-hotspot:focus-visible,
+.v13-doc-hotspot:hover, .v13-doc-hotspot:focus-visible,
+.v13-nursestation-hotspot:hover, .v13-nursestation-hotspot:focus-visible {
+  outline: .28vw solid #1d84d6; outline-offset: -.28vw; background: #dff2ff20;
 }
-.v8-hit span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-.v8-hit-1 { left: 1.6%;  width: 10.6%; }
-.v8-hit-2 { left: 13.2%; width: 10.2%; z-index: 9; }
-.v8-hit-3 { left: 24.3%; width: 10.3%; }
-.v8-hit-4 { left: 35.4%; width: 10.3%; }
-.v8-hit-5 { left: 46.5%; width: 10.3%; }
-.v8-hit-6 { left: 57.6%; width: 10.3%; }
-.v8-hit-7 { left: 68.7%; width: 15.7%; }
-.v8-hit-8 { left: 85.2%; width: 13.1%; }
+.v13-bed-hotspot span,
+.v13-dblcheck-hotspot span,
+.v13-doc-hotspot span,
+.v13-nursestation-hotspot span {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);
+}
+
+/* Bed hotspots — three patient beds */
+.v13-bed-1 { left: 19%;  top: 22%; width: 18%; height: 42%; }
+.v13-bed-2 { left: 41%;  top: 22%; width: 18%; height: 42%; }
+.v13-bed-3 { left: 63%;  top: 22%; width: 18%; height: 42%; }
+
+/* Double-check zone — near prep cart, lower-left */
+.v13-dblcheck-hotspot { left: 5%; top: 68%; width: 14%; height: 14%; }
+
+/* Documentation zone — right side */
+.v13-doc-hotspot { left: 85%; top: 58%; width: 13%; height: 16%; }
+
+/* Nurse station hotspot — right side, above documentation */
+.v13-nursestation-hotspot { left: 85%; top: 38%; width: 13%; height: 18%; }
 
 /* Highlight the hotspot matching the current task */
-.v8-hit.current-zone {
-  background: #1fc9bd18;
-  outline: .28vw dashed var(--cyan);
+.current-zone {
+  background: #1fc9bd18 !important;
+  outline: .28vw dashed var(--cyan) !important;
   outline-offset: -.28vw;
   animation: zone-hint 2s ease-in-out infinite;
 }
@@ -232,7 +249,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 }
 .v13-doctor-hotspot { left: 85.5%; top: 27%; width: 13%; height: 27%; }
 .v13-sink-hotspot   { left: 0;     top: 40%; width: 10%; height: 20%; }
-.v13-prep-hotspot   { left: 5%;    top: 43%; width: 15%; height: 31%; }
+.v13-prep-hotspot   { left: 5%;    top: 43%; width: 15%; height: 24%; }
 .v13-doctor-hotspot:hover, .v13-doctor-hotspot:focus-visible,
 .v13-sink-hotspot:hover,   .v13-sink-hotspot:focus-visible,
 .v13-prep-hotspot:hover,   .v13-prep-hotspot:focus-visible {
@@ -414,9 +431,9 @@ dialog::backdrop { background: #102f3d99; backdrop-filter: blur(5px); }
   to   { transform: translateX(0); }
 }
 
-/* Wider dialog for medication cabinet */
+/* Wider dialog for medication cabinet (37 drugs, 5 columns) */
 dialog:has(.modal-card.wide) {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1280px, calc(100% - 32px));
   max-height: calc(100vh - 32px); overflow: auto;
 }
 .modal-card { padding: 30px; }
@@ -427,12 +444,15 @@ dialog:has(.modal-card.wide) {
 /* ── Drug grid ── */
 .drug-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  max-height: 70vh; overflow-y: auto;
+  padding: 4px;
 }
 .drug {
   display: flex; flex-direction: column;
-  align-items: stretch; text-align: left; min-height: 90px;
+  align-items: stretch; text-align: center; min-height: 90px;
+  font-size: 13px;
 }
 .drug b, .drug small { display: block; }
 .drug em {
@@ -441,17 +461,19 @@ dialog:has(.modal-card.wide) {
 }
 .drug.high { border-color: #e6a6a6; }
 .modal-card.wide .drug {
-  min-width: 0; min-height: 350px; padding: 16px;
+  min-width: 0; min-height: 280px; padding: 10px;
   text-align: center; align-items: center; justify-content: flex-start;
 }
-.modal-card.wide .drug b { font-size: 15px; line-height: 1.3; }
-.modal-card.wide .drug small { min-height: 2.6em; line-height: 1.3; }
+.modal-card.wide .drug b { font-size: 12px; line-height: 1.3; }
+.modal-card.wide .drug small { min-height: 2em; line-height: 1.3; }
+.drug.emergency { border-color: #f0a040; }
 
 /* ── Drug image (photo-style) ── */
-.drug-image.medication-photo {
-  display: block; width: 180px; max-width: 100%; height: 260px;
-  margin: 0 auto 12px; object-fit: contain; object-position: center;
-  background: #fff; border-radius: 12px; padding: 6px;
+.drug-image.medication-photo,
+.drug-photo {
+  display: block; width: 160px; max-width: 100%; height: 200px;
+  margin: 0 auto 10px; object-fit: contain; object-position: center;
+  background: #fff; border-radius: 10px; padding: 4px;
   box-shadow: inset 0 0 0 1px #dce7e4;
 }
 
@@ -571,7 +593,7 @@ th { background: var(--navy); color: white; }
 @media (max-width: 900px) {
   .mode-grid { grid-template-columns: 1fr; }
   .hero, .card, .result-card { padding: 28px; }
-  .drug-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .drug-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .physio-monitor { grid-template-columns: 1fr; }
 }
 
@@ -593,8 +615,8 @@ th { background: var(--navy); color: white; }
   .v8-shell { overflow-x: auto; }
   dialog:has(.modal-card.wide) { width: calc(100% - 16px); }
   .modal-card.wide { padding: 20px; }
-  .drug-grid { grid-template-columns: 1fr; }
-  .drug-image.medication-photo { width: 180px; height: 260px; }
+  .drug-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .drug-photo, .drug-image.medication-photo { width: 140px; height: 180px; }
   .result-card { grid-template-columns: 1fr; }
   .handwash-steps { grid-template-columns: 1fr; }
   .handwash-steps span:not(:last-child)::after { content: ''; }

@@ -1,9 +1,10 @@
 export const ZONE_TARGETS={
-  'nurse-station':{x:88,y:47},'patient-bay':{x:51,y:55},'medication-cart':{x:9,y:28},
+  'nurse-station':{x:88,y:47},'patient-bay':{x:51,y:55},
   'high-alert':{x:88,y:49},'crash-cart':{x:84,y:29},'preparation':{x:14,y:58},
-  'preparation-cart':{x:14,y:58},'documentation':{x:89,y:67},'hand-hygiene':{x:8,y:49},
+  'preparation-cart':{x:14,y:58},'double-check':{x:14,y:72},
+  'documentation':{x:89,y:67},'hand-hygiene':{x:8,y:49},
 }
-const TASK_TARGETS={notify:{x:87,y:48},verify:{x:87,y:48},check:{x:14,y:58},prepare:{x:14,y:58}}
+const TASK_TARGETS={notify:{x:87,y:48},verify:{x:87,y:48},check:{x:14,y:72},prepare:{x:14,y:58}}
 // Assessment/monitoring stops at the physiologic-monitor side of each bed.
 const PATIENT_BEDSIDE_TARGETS=[{x:34,y:43},{x:56,y:43},{x:78,y:43}]
 // IV stands are on the left side of each bed in the approved front-facing scene.
