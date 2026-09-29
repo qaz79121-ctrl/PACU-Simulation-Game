@@ -13,10 +13,13 @@
 <main>
  <section id="scene" class="scene" aria-label="PACU 主場景">
    <img src="assets/ui/pacu_scene.png" alt="PACU 三床恢復室場景">
-   <div id="hotspots">
-    <button class="hotspot sink" data-zone="sink">🫧 洗手台</button>
-    <button class="hotspot cart" data-zone="cart">💊 電腦藥物車</button>
-    <button class="hotspot doctor" data-zone="doctor">👨‍⚕️ 醫師 ISBAR</button>
+   <div id="mainNurse" class="main-nurse" aria-label="主要護理師">
+      <div class="nurse-head">👩🏻‍⚕️</div><div class="nurse-body">▐█▌</div>
+     </div>
+     <div id="hotspots">
+    <button class="hotspot sink" data-zone="sink" aria-label="洗手台"></button>
+    <button class="hotspot cart" data-zone="cart" aria-label="電腦藥物車"></button>
+    <button class="hotspot doctor" data-zone="doctor" aria-label="醫師 ISBAR"></button>
     <button class="clinical-zone iv1" data-zone="iv1" aria-label="PACU-1 點滴給藥區"></button>
     <button class="clinical-zone iv2" data-zone="iv2" aria-label="PACU-2 點滴給藥區"></button>
     <button class="clinical-zone iv3" data-zone="iv3" aria-label="PACU-3 點滴給藥區"></button><button class="patient-target p1" data-patient="0" aria-label="評估 PACU-1 病人"></button>

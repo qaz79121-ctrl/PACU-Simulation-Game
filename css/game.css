@@ -38,3 +38,20 @@ main{padding:6px 8px 10px}
 .iconbar button{border:2px solid #b9dff0;background:#fff;border-radius:12px;font-size:27px;color:#08497d}
 .iconbar button.current{background:#fff4bd;border-color:#ffbd22}.iconbar button.done{background:#daf7ed}
 .mission{bottom:78px}
+
+/* Full-screen responsive PACU game */
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{display:flex;flex-direction:column}
+.hud{flex:0 0 auto;width:100%;box-sizing:border-box}
+main{flex:1;min-height:0;padding:4px;display:flex}
+.scene{width:100%;max-width:none;height:100%;max-height:none;aspect-ratio:auto;margin:0;overflow:hidden}
+.scene>img{width:100%;height:100%;object-fit:fill}
+.hotspot{background:transparent!important;border:0!important;box-shadow:none!important;color:transparent!important;font-size:0!important}
+.hotspot:hover{outline:4px solid rgba(0,184,255,.28);background:rgba(255,255,255,.04)!important}
+.main-nurse{position:absolute;z-index:6;left:38%;bottom:13%;width:70px;height:132px;transform:translateX(-50%);transition:left .65s ease,bottom .65s ease;pointer-events:none;text-align:center;filter:drop-shadow(0 6px 4px #3456)}
+.main-nurse .nurse-head{font-size:50px;line-height:55px}
+.main-nurse .nurse-body{margin:auto;width:48px;height:66px;border-radius:16px 16px 8px 8px;background:#168bd2;color:#fff;font-size:25px;line-height:58px}
+.main-nurse.walking{animation:nurseWalk .22s infinite alternate}
+@keyframes nurseWalk{from{transform:translateX(-50%) translateY(0)}to{transform:translateX(-50%) translateY(-7px)}}
+.iconbar{height:clamp(72px,10vh,104px)}
+.iconbar button{font-size:clamp(22px,2vw,34px);cursor:pointer}

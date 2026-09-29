@@ -15,8 +15,25 @@ function render(){
  document.querySelectorAll('#iconbar button').forEach((b,i)=>{b.className=(i+1<state.step?'done ':'')+(i+1===state.step?'current':'');b.title=`${i+1}. ${STEP_NAMES[i]}`;});
 }
 function zoneLabel(z){const n=state.patientIndex+1;if(z===`monitor${n}`)return `PACU-${n} 生理監視器側`;if(z===`iv${n}`)return `PACU-${n} 病人點滴側`;return ({doctor:'護理站醫師',cart:'電腦藥物車',sink:'洗手台'})[z]||'目前病人照護區'}
-function move(zone){document.querySelectorAll('.move-marker').forEach(x=>x.remove());const marker=document.createElement('div');marker.className='move-marker';marker.style.left=zones[zone]||'12%';marker.textContent='▼ 主要護理師位置';$('#scene').appendChild(marker);if(state.step>12)return results();if(expectedZone()!==zone){toast(`目前步驟需前往「${zoneLabel(expectedZone())}」`);return;}setTimeout(()=>openStep(),350)}
+function moveNurseTo(left,bottom='13%',after){
+ const nurse=$('#mainNurse'); nurse.style.left=left; nurse.style.bottom=bottom;
+ nurse.classList.add('walking');
+ setTimeout(()=>{nurse.classList.remove('walking');if(after)after();},650);
+}
+function move(zone){
+ if(state.step>12)return results();
+ if(expectedZone()!==zone){toast(`目前步驟需前往「${zoneLabel(expectedZone())}」`);return;}
+ moveNurseTo(zones[zone]||'12%','13%',()=>openStep());
+}
 document.querySelectorAll('.hotspot,.clinical-zone').forEach(b=>b.onclick=()=>move(b.dataset.zone));
+
+document.querySelectorAll('.patient-target').forEach(b=>b.onclick=()=>{
+ if(state.step!==1){toast('目前不是病人評估步驟');return;}
+ const idx=Number(b.dataset.patient);
+ if(idx!==state.patientIndex){toast(`目前應先評估 ${currentScenario(state).id} 病人`);return;}
+ moveNurseTo(['34%','53%','72%'][idx],'13%',()=>openStep());
+});
+
 function show(html){body.innerHTML=html;modal.classList.add('show');modal.setAttribute('aria-hidden','false')}
 function hide(){modal.classList.remove('show');modal.setAttribute('aria-hidden','true')}
 $('#close').onclick=hide;
@@ -43,3 +60,9 @@ $('#help').onclick=()=>show(`<h2>📖 遊戲說明</h2><p>依上方「目前任�
 function startTimer(){clearInterval(timerHandle);state.startedAt=Date.now();timerHandle=setInterval(()=>{const sec=Math.floor((Date.now()-state.startedAt)/1000);$('#timer').textContent=`${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`},1000)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')hide()});
 startTimer();render();
+
+const TASK_HINTS=["點擊目前照護的病人，主要護理師走到床旁後開始評估。", "點擊醫師區域，主要護理師走到護理站後以 ISBAR 告知醫師。", "依畫面醫囑內容完成核對。", "點擊洗手台，主要護理師抵達後完成手部衛生。", "點擊電腦藥物車，抵達後開啟 38 種藥物選擇介面。", "在電腦藥物車完成劑量換算。", "在電腦藥物車完成抽藥與藥物準備。", "於電腦藥物車旁與第二位護理師完成雙人核對。", "前往目前病人給藥側完成給藥。", "前往目前病人監測位置完成給藥後監測。", "再次前往洗手台完成手部衛生。", "完成本位病人的給藥紀錄。"];
+function showTaskHint(i){
+ openModal(`<h2>任務 ${i+1}｜${STEP_NAMES[i]}</h2><p>${TASK_HINTS[i]}</p><p class="muted">此按鍵僅提供任務提示，不會完成關卡、加分或跳關。</p>`);
+}
+document.querySelectorAll('#iconbar button').forEach((b,i)=>b.addEventListener('click',()=>showTaskHint(i)));
