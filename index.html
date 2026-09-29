@@ -17,17 +17,17 @@
     <button class="hotspot sink" data-zone="sink">🫧 洗手台</button>
     <button class="hotspot cart" data-zone="cart">💊 電腦藥物車</button>
     <button class="hotspot doctor" data-zone="doctor">👨‍⚕️ 醫師 ISBAR</button>
-    <button class="hotspot bed b1" data-zone="monitor1">PACU-1</button><button class="hotspot bed b2" data-zone="monitor2">PACU-2</button><button class="hotspot bed b3" data-zone="monitor3">PACU-3</button>
     <button class="clinical-zone iv1" data-zone="iv1" aria-label="PACU-1 點滴給藥區"></button>
     <button class="clinical-zone iv2" data-zone="iv2" aria-label="PACU-2 點滴給藥區"></button>
-    <button class="clinical-zone iv3" data-zone="iv3" aria-label="PACU-3 點滴給藥區"></button>
-    <button class="clinical-zone mon1" data-zone="monitor1" aria-label="PACU-1 生理監視器評估區"></button>
-    <button class="clinical-zone mon2" data-zone="monitor2" aria-label="PACU-2 生理監視器評估區"></button>
-    <button class="clinical-zone mon3" data-zone="monitor3" aria-label="PACU-3 生理監視器評估區"></button>
+    <button class="clinical-zone iv3" data-zone="iv3" aria-label="PACU-3 點滴給藥區"></button><button class="patient-target p1" data-patient="0" aria-label="評估 PACU-1 病人"></button>
+        <button class="patient-target p2" data-patient="1" aria-label="評估 PACU-2 病人"></button>
+        <button class="patient-target p3" data-patient="2" aria-label="評估 PACU-3 病人"></button>
    </div>
-   <div class="mission"><b id="missionTitle">目前任務：評估病人</b><span id="missionHint">請走到目前病人的生理監視器側</span></div>
- </section>
- <nav id="taskbar" class="taskbar" aria-label="12步驟流程"></nav>
+   <div class="mission"><b id="missionTitle">目前任務：評估病人</b><span id="missionHint">請點擊目前病人進行評估</span></div>
+ <nav id="iconbar" class="iconbar" aria-label="12步驟圖示">
+      <button>📋</button><button>👨‍⚕️</button><button>🧾</button><button>🫧</button><button>🖥️</button><button>🧮</button><button>💉</button><button>👩‍⚕️👩‍⚕️</button><button>💉</button><button>📈</button><button>📋</button><button>✅</button>
+     </nav></section>
+ 
 </main>
 <div id="toast" class="toast" role="status"></div>
 <div id="modal" class="modal" aria-hidden="true"><div class="panel"><button class="x" id="close">×</button><div id="modalBody"></div></div></div>

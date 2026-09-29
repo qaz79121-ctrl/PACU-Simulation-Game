@@ -12,7 +12,7 @@ function render(){
  $('#score').textContent=state.score;$('#patients').textContent=state.completed;
  if(state.step<=12){const sc=currentScenario(state);$('#step').textContent=`${sc.id}｜步驟 ${state.step}/12`;$('#bar').style.width=`${((state.patientIndex*12+state.step-1)/36)*100}%`;$('#missionTitle').textContent=`目前任務：${STEP_NAMES[state.step-1]}`;$('#missionHint').textContent=`請前往：${zoneLabel(expectedZone())}`;}
  else{$('#step').textContent='任務完成';$('#bar').style.width='100%';$('#missionTitle').textContent='三位病人照護完成';$('#missionHint').textContent='查看學習成果';}
- $('#taskbar').innerHTML=STEP_NAMES.map((n,i)=>`<button class="task ${i+1<state.step?'done':''} ${i+1===state.step?'current':''}" data-step="${i+1}"><b>${i+1}</b><br>${n}</button>`).join('');
+ document.querySelectorAll('#iconbar button').forEach((b,i)=>{b.className=(i+1<state.step?'done ':'')+(i+1===state.step?'current':'');b.title=`${i+1}. ${STEP_NAMES[i]}`;});
 }
 function zoneLabel(z){const n=state.patientIndex+1;if(z===`monitor${n}`)return `PACU-${n} 生理監視器側`;if(z===`iv${n}`)return `PACU-${n} 病人點滴側`;return ({doctor:'護理站醫師',cart:'電腦藥物車',sink:'洗手台'})[z]||'目前病人照護區'}
 function move(zone){document.querySelectorAll('.move-marker').forEach(x=>x.remove());const marker=document.createElement('div');marker.className='move-marker';marker.style.left=zones[zone]||'12%';marker.textContent='▼ 主要護理師位置';$('#scene').appendChild(marker);if(state.step>12)return results();if(expectedZone()!==zone){toast(`目前步驟需前往「${zoneLabel(expectedZone())}」`);return;}setTimeout(()=>openStep(),350)}
