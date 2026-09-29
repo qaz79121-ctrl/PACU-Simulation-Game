@@ -1,37 +1,6 @@
-<!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PACU Medication Mission</title><link rel="stylesheet" href="css/game.css"></head>
-<body>
-<header class="hud">
- <div class="brand"><span class="clip">📋</span><div><b>PACU</b><small>Medication Mission</small></div></div>
- <div class="stat">⭐ <b id="score">0</b><span>/100<br><small>總分</small></span></div>
- <div class="stat">👥 <b id="patients">0</b><span>/3<br><small>完成病人數</small></span></div>
- <div class="progress"><div class="bar"><i id="bar"></i></div><b id="step">PACU-1｜步驟 1/12</b></div>
- <div class="clock">⏱️ <b id="timer">00:00</b></div>
- <button id="help">📖 遊戲說明</button><button id="reset">↻ 重新開始</button>
-</header>
-<main>
- <section id="scene" class="scene" aria-label="PACU 主場景">
-   <img src="assets/ui/pacu_scene.png" alt="PACU 三床恢復室場景">
-   <div id="mainNurse" class="main-nurse" aria-label="主要護理師">
-      <div class="nurse-head">👩🏻‍⚕️</div><div class="nurse-body">▐█▌</div>
-     </div>
-     <div id="hotspots">
-    <button class="hotspot sink" data-zone="sink" aria-label="洗手台"></button>
-    <button class="hotspot cart" data-zone="cart" aria-label="電腦藥物車"></button>
-    <button class="hotspot doctor" data-zone="doctor" aria-label="醫師 ISBAR"></button>
-    <button class="clinical-zone iv1" data-zone="iv1" aria-label="PACU-1 點滴給藥區"></button>
-    <button class="clinical-zone iv2" data-zone="iv2" aria-label="PACU-2 點滴給藥區"></button>
-    <button class="clinical-zone iv3" data-zone="iv3" aria-label="PACU-3 點滴給藥區"></button><button class="patient-target p1" data-patient="0" aria-label="評估 PACU-1 病人"></button>
-        <button class="patient-target p2" data-patient="1" aria-label="評估 PACU-2 病人"></button>
-        <button class="patient-target p3" data-patient="2" aria-label="評估 PACU-3 病人"></button>
-   </div>
-   <div class="mission"><b id="missionTitle">目前任務：評估病人</b><span id="missionHint">請點擊目前病人進行評估</span></div>
- <nav id="iconbar" class="iconbar" aria-label="12步驟圖示">
-      <button>📋</button><button>👨‍⚕️</button><button>🧾</button><button>🫧</button><button>🖥️</button><button>🧮</button><button>💉</button><button>👩‍⚕️👩‍⚕️</button><button>💉</button><button>📈</button><button>📋</button><button>✅</button>
-     </nav></section>
- 
-</main>
-<div id="toast" class="toast" role="status"></div>
-<div id="modal" class="modal" aria-hidden="true"><div class="panel"><button class="x" id="close">×</button><div id="modalBody"></div></div></div>
-<script type="module" src="js/app.js"></script></body></html>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PACU Medication Mission</title><link rel="stylesheet" href="css/game.css"></head><body>
+<div id="app"><header class="hud"><div class="brand">📋 <strong>PACU</strong><small>Medication Mission</small></div><div class="stat">⭐ <b id="score">0</b><small>/100<br>總分</small></div><div class="stat">👥 <b id="done">0</b><small>/3<br>完成病人數</small></div><div class="progress"><div id="progressFill"></div><b id="patientStep">PACU-1｜步驟 1/12</b></div><div class="timer">⏱️ <span id="time">00:00</span></div><button id="help">▣ 遊戲說明</button><button id="restart">↻ 重新開始</button></header>
+<main id="scene"><div class="ceiling"></div><div class="left-zone"><div class="cabinet interact" data-target="medcart">💊<b>藥物櫃</b><span>38 項常備藥</span></div><div class="sink interact" data-target="sink">🚰<b>洗手台</b></div><div class="cart interact" data-target="computer">🖥️<b>電腦藥物車</b></div><div class="checker interact" data-target="checker"><span class="person">👩🏻‍⚕️</span><b>雙人核對護理師</b></div></div>
+<div class="bays"><section class="bay" data-patient="0"><h2>PACU-1</h2><div class="monitor">♥ 82<br><i>SpO₂ 98</i><br><em>RR 16</em></div><div class="bed interact" data-target="bed" data-p="0"><div class="patient male">👨🏻‍🦱</div><div class="blanket"></div></div></section><section class="bay" data-patient="1"><h2>PACU-2</h2><div class="monitor">♥ 86<br><i>SpO₂ 100</i><br><em>RR 16</em></div><div class="bed interact" data-target="bed" data-p="1"><div class="patient female">👩🏻</div><div class="blanket"></div></div></section><section class="bay" data-patient="2"><h2>PACU-3</h2><div class="monitor">♥ 74<br><i>SpO₂ 97</i><br><em>RR 14</em></div><div class="bed interact" data-target="bed" data-p="2"><div class="patient old">👴🏻</div><div class="blanket"></div></div></section></div>
+<div class="doctor interact" data-target="doctor"><div>👨🏻‍⚕️</div><b>護理站</b><span>醫師 ISBAR</span></div><div id="player" aria-label="主要護理師"><div class="nurse-head">👩🏻‍⚕️</div><div class="nurse-body">▰</div><div class="legs">▌ ▐</div><div class="shoes">◒ ◓</div></div><div id="hint">請點擊目前任務需要前往的區域</div></main>
+<nav id="missions"></nav></div><div id="modal" class="modal hidden"><div class="dialog"><button class="x">×</button><div id="dialogContent"></div></div></div><script type="module" src="js/main.js"></script></body></html>
