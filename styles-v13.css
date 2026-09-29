@@ -197,3 +197,85 @@ dialog:has(.modal-card.wide){width:min(1180px,calc(100% - 32px));max-height:calc
   font-size:clamp(8px,.68vw,14px)!important;
   letter-spacing:.03em!important;
 }
+
+
+/* v15.4 definitive fixes: actual <img> nurse + HUD integrated into header */
+.scene.v8-board.v12-board.v13-board .v13-moving-nurse{
+  width:8.4%!important;
+  height:34%!important;
+  padding:0!important;
+  border:0!important;
+  background:none!important;
+  overflow:visible!important;
+  opacity:1!important;
+  box-shadow:none!important;
+}
+.scene.v8-board.v12-board.v13-board .v154-nurse-fullbody{
+  position:absolute!important;
+  left:50%!important;
+  bottom:0!important;
+  width:auto!important;
+  height:100%!important;
+  max-width:none!important;
+  display:block!important;
+  transform:translateX(-50%)!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  pointer-events:none!important;
+}
+
+/* Cover the artwork's printed counters exactly and make the live values part of the header. */
+.scene.v8-board.v12-board.v13-board .v8-live-score,
+.scene.v8-board.v12-board.v13-board .v8-live-progress{
+  top:1.05%!important;
+  height:8.45%!important;
+  padding:0!important;
+  margin:0!important;
+  border:none!important;
+  outline:none!important;
+  border-radius:.35vw!important;
+  background:rgb(237,247,255)!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+  overflow:hidden!important;
+  z-index:20!important;
+}
+.scene.v8-board.v12-board.v13-board .v8-live-score{
+  left:25.25%!important;
+  width:15.05%!important;
+}
+.scene.v8-board.v12-board.v13-board .v8-live-progress{
+  left:40.65%!important;
+  width:14.65%!important;
+}
+.scene.v8-board.v12-board.v13-board .v8-live-score b,
+.scene.v8-board.v12-board.v13-board .v8-live-progress b{
+  margin:0!important;
+  color:#123a5c!important;
+  font-size:clamp(20px,2.05vw,42px)!important;
+  font-weight:900!important;
+  line-height:1!important;
+}
+.scene.v8-board.v12-board.v13-board .v8-live-score span,
+.scene.v8-board.v12-board.v13-board .v8-live-progress span{
+  margin:0!important;
+  color:#123a5c!important;
+  font-size:clamp(13px,1.25vw,25px)!important;
+  font-weight:800!important;
+}
+.scene.v8-board.v12-board.v13-board .v8-live-score small,
+.scene.v8-board.v12-board.v13-board .v8-live-progress small{
+  position:absolute!important;
+  left:50%!important;
+  bottom:5%!important;
+  transform:translateX(-50%)!important;
+  margin:0!important;
+  padding:0!important;
+  width:max-content!important;
+  background:transparent!important;
+  color:#173b59!important;
+  font-size:clamp(8px,.72vw,15px)!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
