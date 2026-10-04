@@ -1,0 +1,16 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "5.6",
+  "Category": "Games",
+  "Description": "PACU Simulator 3D - third-person post-anesthesia care simulation",
+  "Modules": [
+    {
+      "Name": "PACUSimulator3D",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ],
+  "Plugins": [
+    { "Name": "EnhancedInput", "Enabled": true }
+  ]
+}
